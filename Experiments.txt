@@ -1,0 +1,5 @@
+TODO?
+
+change mutation to alter direction?
+	= not random direction 1% of time, but changed by a few degrees
+compare to minimum distance to the goal
