@@ -1,0 +1,13 @@
+            0,1,2,3,4,5,6,7,8,9,10,11
+success   | 0,0,0,0,3,4,7,0,0,0, 0, 0 , normalized to 1 (sum sq = 1)
+no-success| 1,1,1,0,2,1,0,1,1,0, 0, 0 , normalized to 1 (sum sq = 1)
+            
+            -1,-1,-1,0,1,3,7,-1,0,0,0,0, normalized to 1 (sum sq = 1)
+
+'gravity field' | 0,0,0,0,.05,.9,.05,0,0,0,0,0, (learned through GA)
+
+generated with call history except for most recent call --> label: 6 (label is a unit vector)
+
+"fitness is 1/(r_ot • r_om)
+addtional fitness if the member "lands" in the correct classification space
+alternatively additional cost if the member lands in the wrong classification space"

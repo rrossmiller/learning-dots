@@ -8,10 +8,10 @@ class Population{
   // limit amount of steps
   int minStep = 400;
   
-  Population(int size){
+  Population(int size, int label){
     dots = new Dot[size];
     for(int i = 0; i < size; i++){
-      dots[i] = new Dot(2);
+      dots[i] = new Dot(2, label);
     }
   }
   
@@ -23,24 +23,24 @@ class Population{
   }
   
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-void update(){
-    for(int i = 0; i< dots.length; i++) {
+void update() {
+    for(int i = 0; i< dots.length; i++){
       if(dots[i].brain.step > minStep){
         dots[i].dead = true;
       }
-      else{
+      else {
         dots[i].update();
       }
     }
   }
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-  void calculateFitness()  {
+  void calculateFitness(){
     for(int i = 0; i< dots.length; i++){
       dots[i].calculateFitness();
     } 
   }
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-  boolean allDotsDead()  {
+  boolean allDotsDead(){
     for(int i = 0; i < dots.length; i++){
       if(!dots[i].dead && !dots[i].reachedGoal){
         return false;
@@ -49,7 +49,7 @@ void update(){
     return true;
   }
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-  void naturalSelection()  {
+  void naturalSelection(){
     Dot[] newDots = new Dot[dots.length];
     calculateFitnessSum();
     
@@ -70,7 +70,7 @@ void update(){
   }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-  Dot selectParent()  {
+  Dot selectParent(){
     float rand = random(fitnessSum); // take a random value between 0 and the fitness sum
     float runningSum = 0;
     
@@ -91,8 +91,8 @@ void update(){
   }
   
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-  void mutate(){
-    for(int i = 1; i < dots.length; i++) {
+  void mutateDemBabies(){
+    for(int i = 1; i < dots.length; i++){
       dots[i].brain.mutate();
     }
   }
@@ -113,8 +113,4 @@ void update(){
       minStep = dots[bestDot].brain.step;
     }
   }
-
-
-
-
 }
