@@ -4,14 +4,12 @@ class Population{
   float fitnessSum;
   int generation = 1;
   int bestDot = 0;
-  
-  // limit amount of steps
+  int label;
   int minStep = 400;
-  
   Population(int size, int label){
     dots = new Dot[size];
     for(int i = 0; i < size; i++){
-      dots[i] = new Dot(2, label);
+      dots[i] = new Dot(2, label, this.minStep);
     }
   }
   
@@ -70,6 +68,19 @@ void update() {
   }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
+  Dot selectParent_old(){
+    float rand = random(fitnessSum); // take a random value between 0 and the fitness sum
+    float runningSum = 0;
+    
+    for(int i = 0; i < dots.length; i++){
+      runningSum += dots[i].fitness; // add the current dot's fitness to the running sum
+      if(runningSum > rand){ // if the running sum is greater than the randomly selected point in the sum, return that dot
+        return dots[i];
+      }
+    }
+    return null;
+  }
+  
   Dot selectParent(){
     float rand = random(fitnessSum); // take a random value between 0 and the fitness sum
     float runningSum = 0;
@@ -88,6 +99,8 @@ void update() {
     for(int i = 0; i < dots.length; i++){
       fitnessSum += dots[i].fitness;
     }
+    fitnessSum  = fitnessSum / popSize;
+    println(dots[0].label + " fitness sum: " + fitnessSum);
   }
   
 //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -108,9 +121,11 @@ void update() {
       }
     }
     bestDot = maxIndex;
+    println(dots[0].label + " best dot fitness: " + dots[bestDot].fitness);
     
+    // reduce the steps possible to make it harder
     if(dots[bestDot].reachedGoal){
-      minStep = dots[bestDot].brain.step;
+      this.minStep = dots[bestDot].brain.step;
     }
   }
 }
